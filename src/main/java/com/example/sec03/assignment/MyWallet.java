@@ -5,9 +5,9 @@ public class MyWallet {
     private int quantity;
     private int balance;
 
-    public MyWallet(int quantity, int balance) {
-        this.quantity = quantity;
-        this.balance = balance;
+    public MyWallet() {
+        this.quantity = 0;
+        this.balance = 1000;
     }
 
     public void buyOne(int price) {
@@ -20,7 +20,23 @@ public class MyWallet {
         this.quantity = 0;
     }
 
+    public int getProfit() {
+        return this.balance - 1000;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     public int getBalance() {
         return balance;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

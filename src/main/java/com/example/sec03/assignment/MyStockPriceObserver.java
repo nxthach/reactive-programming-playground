@@ -9,10 +9,11 @@ public class MyStockPriceObserver implements Subscriber<Integer> {
 
     private static final Logger log = LoggerFactory.getLogger(MyStockPriceObserver.class);
 
-    private int quantity = 0;
-    private int balance = 1000;
+    private MyWallet myWallet;
 
-    
+    public MyStockPriceObserver(MyWallet myWallet) {
+        this.myWallet = myWallet;
+    }
 
     private Subscription subscription;
 
@@ -28,23 +29,21 @@ public class MyStockPriceObserver implements Subscriber<Integer> {
         log.info("updated price: {}", price);
 
         //buy
-        if (price < 90 && balance >= price) {
+        if (price < 90 && myWallet.getBalance() >= price) {
 
-            quantity++;
-            balance = balance - price;
+            myWallet.buyOne(price);
 
-            log.info("bought a stock at {}. total quantity: {}, remaining balance: {}",
-                    price, quantity, balance);
+            log.info("bought a stock at {}, total quantity: {}, remaining balance: {}",
+                    price, myWallet.getQuantity(), myWallet.getBalance());
         }
 
         //sell all
-        if (price > 110 & quantity > 0) {
-            log.info("selling {} quantities at {}", quantity, price);
+        if (price > 110 & myWallet.getQuantity() > 0) {
+            log.info("selling {} quantities at {}", myWallet.getQuantity(), price);
 
-            balance = balance + (quantity * price);
-            quantity = 0;
+            myWallet.sellAll(price);
 
-            log.info("profit {}", (balance - 1000));
+            log.info("profit {}", myWallet.getProfit());
 
             this.subscription.cancel();
         }
@@ -59,29 +58,5 @@ public class MyStockPriceObserver implements Subscriber<Integer> {
     public void onComplete() {
         log.info("completed!");
 
-    }
-
-    class Wallet {
-        private int quantity;
-        private int balance;
-
-        public Wallet(int quantity, int balance) {
-            this.quantity = quantity;
-            this.balance = balance;
-        }
-
-        public void buyOne(int price) {
-            this.quantity++;
-            this.balance = this.balance - price;
-        }
-
-        public void sellAll(int price) {
-            this.balance = this.balance + this.quantity * price;
-            this.quantity = 0;
-        }
-
-        public int getBalance() {
-            return balance;
-        }
     }
 }

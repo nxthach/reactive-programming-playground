@@ -6,13 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StockPriceObserver implements Subscriber<Integer> {
-
     private static final Logger log = LoggerFactory.getLogger(StockPriceObserver.class);
 
     private int quantity = 0;
     private int balance = 1000;
-
-
 
     private Subscription subscription;
 
