@@ -14,6 +14,11 @@ public class FileServiceDemo {
         fileService.read("file.txt")
                 .subscribe(Util.subscriber());
 
+        System.out.println("---");
+
+        fileService.delete("file.txt")
+                .subscribe(Util.subscriber());
+
     }
 
     static class Demo1 {
