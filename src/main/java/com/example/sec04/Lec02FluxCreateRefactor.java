@@ -14,6 +14,8 @@ public class Lec02FluxCreateRefactor {
         flux.subscribe(Util.subscriber());
 
         for (int i = 0; i < 10; i++) {
+            //use sink to send data
+            //once flux sink have data, it will send data to subscriber
             generator.generate();
         }
 
