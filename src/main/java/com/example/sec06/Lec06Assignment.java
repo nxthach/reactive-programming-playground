@@ -3,10 +3,13 @@ package com.example.sec06;
 import com.example.common.Util;
 import com.example.sec06.assignment.*;
 import com.example.sec06.client.ExternalServiceClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
 public class Lec06Assignment {
+    private static final Logger log = LoggerFactory.getLogger(Lec06Assignment.class);
     public static void main(String[] args) {
         ExternalServiceClient client = new ExternalServiceClient();
 
@@ -15,7 +18,8 @@ public class Lec06Assignment {
 
         var orderFlux = client.ordersStream()
                 .publish()
-                .refCount(2);
+                .refCount(2)
+                .doOnNext(order -> log.info("received data: {}", order));
 
         //
         orderFlux.subscribe(inventoryService::consume);

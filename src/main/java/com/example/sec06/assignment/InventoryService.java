@@ -12,7 +12,7 @@ public class InventoryService implements OrderProcessor {
 
     @Override
     public void consume(Order order) {
-        var currentInventory = db.getOrDefault(order.category(), 500);
+        var currentInventory = db.getOrDefault(order.category(), 1000);
         var updatedInventory = currentInventory - order.quantity();
         db.put(order.category(), updatedInventory);
     }

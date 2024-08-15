@@ -13,7 +13,7 @@ public class RevenueService implements OrderProcessor {
     @Override
     public void consume(Order order) {
         var currentRevenue = db.getOrDefault(order.category(), 0);
-        var updatedRevenue = currentRevenue + order.price();
+        var updatedRevenue = currentRevenue + order.price() * order.quantity();
         db.put(order.category(), updatedRevenue);
     }
 
