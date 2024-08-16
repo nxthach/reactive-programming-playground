@@ -8,6 +8,9 @@ import reactor.core.publisher.Flux;
 import java.time.Duration;
 
 
+/*
+sources are subscribed to eagerly. Not guarantee the order
+ */
 public class Lec05Merge {
     private static final Logger log = LoggerFactory.getLogger(Lec05Merge.class);
 
